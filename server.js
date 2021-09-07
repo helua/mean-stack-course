@@ -12,12 +12,14 @@
 
 // server.listen(port);
 
+//launch backend app.js with error handling
+
 const app = require("./backend/app");
-const debug = require("debug")("node-angular");
+const debug = require("debug")("node-angular");//to drugie to dowolna nazwa chyba
 const http = require("http");
 
 
-const normalizePort = val => {
+const normalizePort = val => {//normalize port function, to ensure it's a valid number when we receive from environment
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -33,7 +35,7 @@ const normalizePort = val => {
   return false;
 };
 
-const onError = error => {
+const onError = error => { //on error funtion to log smth on each error type
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -52,17 +54,21 @@ const onError = error => {
   }
 };
 
-const onListening = () => {
+const onListening = () => {//to output that we listen to upcoming req
   const addr = server.address();
   const bind = typeof port === "string" ? "pipe " + port : "port " + port;
   debug("Listening on " + bind);
 };
 
-const port = normalizePort(process.env.PORT || "3000");
-app.set("port", port);
+const port = normalizePort(process.env.PORT || "3000"); //setting up the port
+app.set("port", port); //set port on exxpress app
 
-const server = http.createServer(app);
-server.on("error", onError);
-server.on("listening", onListening);
-server.listen(port);
+const server = http.createServer(app); //set up node server
+server.on("error", onError); //set up listener on error
+server.on("listening", onListening); //set up listener on listening
+server.listen(port); //start a server
+
+
+//also installed nodemon "npm i --save-dev nodemon" to install the testing environment, watches node.js files and restart on change
+//wcześniej używaliśmy "node server.js", żeby odpalić za każdym razem
 
